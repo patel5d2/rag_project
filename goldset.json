@@ -1,0 +1,68 @@
+{
+  "about": "Gold set for my incident response knowledge base in my_kb/. 6 answerable + 2 unanswerable questions.",
+  "kb_files": [
+    "01_ir_overview.md",
+    "02_severity_levels.md",
+    "03_phishing_playbook.md",
+    "04_ransomware_playbook.md",
+    "05_evidence_handling.md"
+  ],
+  "questions": [
+    {
+      "qid": "Q1",
+      "question": "Who has the authority to declare a security incident closed?",
+      "source": "01_ir_overview.md",
+      "evidence": ["The Incident Commander is the only person who can declare an incident closed."],
+      "answerable": true
+    },
+    {
+      "qid": "Q2",
+      "question": "How quickly do we have to acknowledge a critical SEV1 incident?",
+      "source": "02_severity_levels.md",
+      "evidence": ["Acknowledge within 15 minutes, at any hour."],
+      "answerable": true
+    },
+    {
+      "qid": "Q3",
+      "question": "A user typed their password into a phishing page. How far back should we review their sign-in logs?",
+      "source": "03_phishing_playbook.md",
+      "evidence": ["Review sign-in logs for the last 14 days"],
+      "answerable": true
+    },
+    {
+      "qid": "Q4",
+      "question": "What should we do with the backup servers when ransomware is detected?",
+      "source": "04_ransomware_playbook.md",
+      "evidence": ["Take the backup servers offline from the production network"],
+      "answerable": true
+    },
+    {
+      "qid": "Q5",
+      "question": "How do we prove a forensic disk image is an exact copy of the original drive?",
+      "source": "05_evidence_handling.md",
+      "evidence": ["Calculate a SHA-256 hash of the original and of the image"],
+      "answerable": true
+    },
+    {
+      "qid": "Q6",
+      "question": "How long are security logs retained?",
+      "source": "05_evidence_handling.md",
+      "evidence": ["kept for one year online and an additional six years in archive"],
+      "answerable": true
+    },
+    {
+      "qid": "Q7",
+      "question": "What is a good recipe for banana bread?",
+      "source": null,
+      "evidence": [],
+      "answerable": false
+    },
+    {
+      "qid": "Q8",
+      "question": "What are the steps in our playbook for responding to a DDoS attack against our website?",
+      "source": null,
+      "evidence": [],
+      "answerable": false
+    }
+  ]
+}
