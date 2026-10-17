@@ -2,12 +2,17 @@
   "id": "session-1792279384923",
   "startedAt": "2026-10-17T23:23:04.923Z",
   "cwd": "/Users/dharminpatel/IT 7075C - APPLIED AI FOR CYBERSECURITY/rag_project",
-  "context": {},
+  "context": {
+    "lastMatchedPatterns": [
+      "mem-homelab-repos-----0"
+    ]
+  },
   "metrics": {
     "edits": 2,
     "commands": 0,
     "tasks": 0,
     "errors": 0
   },
-  "restoredAt": "2026-10-17T23:24:30.161Z"
+  "restoredAt": "2026-10-17T23:24:30.161Z",
+  "updatedAt": "2026-10-17T23:50:52.436Z"
 }

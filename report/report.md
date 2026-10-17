@@ -2,9 +2,9 @@
 
 **IT 7075C Applied AI for Cybersecurity** · Dharmin Patel
 
-**GitHub project folder:** `<PASTE GITHUB LINK TO rag_project/ HERE>`
+**GitHub project folder:** [github.com/patel5d2/rag_project](https://github.com/patel5d2/rag_project)
 
-**Video walkthrough:** `<PASTE VIDEO LINK HERE>`
+**Video walkthrough:** [Watch the video on SharePoint](https://mailuc-my.sharepoint.com/:v:/g/personal/patel5d2_mail_uc_edu/IQCdUnekw9t8TYws3_kmg02nAa4j9jCkLgGce7JcA3DKTEs?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=TrV4Qu)
 
 ---
 
