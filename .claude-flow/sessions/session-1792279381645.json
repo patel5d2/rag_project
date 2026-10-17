@@ -1,0 +1,14 @@
+{
+  "id": "session-1792279381645",
+  "startedAt": "2026-10-17T23:23:01.645Z",
+  "cwd": "/Users/dharminpatel/IT 7075C - APPLIED AI FOR CYBERSECURITY/rag_project",
+  "context": {},
+  "metrics": {
+    "edits": 0,
+    "commands": 0,
+    "tasks": 0,
+    "errors": 0
+  },
+  "endedAt": "2026-10-17T23:23:03.333Z",
+  "duration": 1690
+}
