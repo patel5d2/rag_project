@@ -23,9 +23,9 @@ untrusted input (the user's question, retrieved text) in clearly marked slots in
 into the instructions by hand, which makes the prompt easier to test and to defend.
 
 **What does a chain of prompt, model, and output parser do, stage by stage?**
-The prompt takes a dictionary of values and produces a formatted list of messages. The model takes those
-messages and returns a message object. The output parser takes that message and turns it into what the
-program needs; `StrOutputParser` simply extracts the text. The pipe `|` passes each stage's output to the next.
+The prompt fills its placeholders from a dictionary of values and produces a list of messages, and the model
+reads those messages and returns a message object. The output parser turns that object into what the program
+needs (`StrOutputParser` just extracts the text), and the pipe `|` passes each stage's output to the next.
 
 **What is a retriever, and how does it plug into a chain?**
 A retriever is any component that takes a query string and returns a list of relevant `Document`s. Here it
@@ -34,11 +34,11 @@ wraps the Chroma store with a `k` and a score threshold. In a chain it sits in t
 the retriever, the documents are formatted into text, and that text fills the `{context}` slot of the prompt.
 
 **When would you use a branch rather than running two steps in parallel? Give a security example of each.**
-Use parallel steps when both results are needed and neither depends on the other; use a branch when only one
+Use parallel steps when both results are needed and neither depends on the other, and a branch when only one
 path should run, chosen by a condition. *Parallel:* when an alert arrives, look up the source IP in threat
-intelligence and pull the user's recent sign-ins at the same time, then give both to the analyst. *Branch:*
-if the retriever returns nothing, refuse without calling the model; otherwise answer. My bot does exactly this
-(Part 7), so a refusal cannot be overridden by a model that ignores its instructions or by a prompt injection.
+intelligence and pull the user's recent sign-ins at the same time, then hand both to the analyst. *Branch:* my
+bot (Part 7) refuses without calling the model when the retriever returns nothing, so the refusal cannot be
+overridden by a model that ignores its instructions or by a prompt injection.
 
 ## 2. What I built
 
