@@ -1,4 +1,4 @@
-# Video script: Rebuild Your RAG with LangChain (about 8 minutes)
+# Video script: Rebuild Your RAG with LangChain (about 9 minutes; section times are approximate)
 
 Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everything else is read aloud.
 
@@ -9,11 +9,9 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 **[SCREEN]** Notebook title cell and the TODO table.
 
 > Hi, I'm Dharmin Patel, and this is my mini project for IT 7075C: rebuilding my RAG system with LangChain.
-> In the RAG module I built an incident-response question-and-answer bot by hand. It works over five playbook
-> documents for a fictional organization, and I tested it with eight gold questions: six that the documents
-> answer and two that they don't. Here I rebuilt the same bot with LangChain, on the same documents and the
-> same questions, measured it the same way, and compared the two. The most interesting result is that
-> LangChain scored one question worse, and I'll show exactly why at the end.
+> In the RAG module I built an incident-response bot by hand, over five playbook documents, tested with eight
+> gold questions: six the documents answer and two they don't. Here I rebuilt it with LangChain on the same
+> documents and questions, and compared the two. LangChain scored one question worse, and I'll show why at the end.
 
 ---
 
@@ -25,10 +23,8 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 
 > Parts 1 to 5 are the five TODOs, which I practised on the course documents first. TODO 1 loads and splits.
 > `TextLoader` reads each file into a `Document`, and `RecursiveCharacterTextSplitter` cuts it into overlapping
-> chunks. This replaces my `split_into_chunks()` function and its window loop. One thing I didn't have to
-> write anymore: in my old notebook I kept a separate `sources` list in step with the chunks. Here the loader
-> puts the file path in the metadata, and the splitter copies it onto every chunk. You can see it on the first
-> chunk: source, `ssrf.txt`. That gives 23 chunks in total.
+> chunks. This replaces my `split_into_chunks()` loop. I also no longer keep a separate `sources` list: the
+> loader puts the file path in the metadata, and the splitter copies it onto every chunk. 23 chunks in total.
 
 ### TODO 2: Vector store (1:05–1:35)
 
@@ -36,10 +32,8 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 
 > TODO 2 builds the vector store. `HuggingFaceEmbeddings` wraps the same model as before, `all-MiniLM-L6-v2`,
 > and `Chroma.from_documents` embeds and stores every chunk in one call. That replaces my `embed()` function
-> and the `collection.add()` call with its ids, embeddings and metadata. The one line I want to point out is
-> this one: the collection is set to cosine space. Chroma's default is L2 distance, and every threshold in
-> this project assumes cosine. If I left this out, nothing would crash, but every threshold would quietly
-> mean something different.
+> and `collection.add()`. The line to notice is this one: cosine space. Chroma's default is L2, and if I left
+> this out nothing would crash, but every threshold would quietly mean something different.
 
 ### TODO 3: Retriever (1:35–2:20)
 
@@ -63,8 +57,7 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 > TODO 4 is the prompt template. It has the same instructions as my old `SYSTEM` string: answer only from the
 > context, cite the source file, start with `[RAG]` if the answer is in the context, and if it isn't, say you
 > don't know instead of answering from memory. The difference is that it's a `ChatPromptTemplate` with two
-> placeholders, `{context}` and `{question}`. Printed here with test values, you can see the context block and
-> the question filled in. The instructions are written once, and the user's input stays in its own slot.
+> placeholders, `{context}` and `{question}`, filled in here with test values.
 
 ### TODO 5: The chain (2:50–3:30)
 
@@ -73,15 +66,13 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 > TODO 5 wires everything into one chain, and it reads left to right. The question goes into a dictionary:
 > the `context` key sends it through the retriever and `format_docs`, and the `question` key passes it straight
 > through. That fills the prompt, the prompt goes to the model, and `StrOutputParser` pulls out the text. This
-> replaces my `ask()` and `generate()` functions. The model is `gpt-4o-mini` if an API key is set, with an
-> offline stand-in as a fallback, so a missing key never breaks the notebook. The run you're seeing is in
-> offline mode. The SSRF question is answered from the context; the Log4Shell question isn't covered, so it
-> says it doesn't know.
->
-> **[SCREEN]** Part 6 output: `found 5/6, refused 2/2`.
->
-> Part 6 scores the practice pipeline on the course questions: it found the evidence for 5 out of 6 and
-> refused both unanswerable questions.
+> replaces `ask()` and `generate()`. The model is `gpt-4o-mini` if an API key is set, with an offline
+> stand-in as a fallback; this run is offline. The SSRF question is answered from context; Log4Shell isn't
+> covered, so it says it doesn't know.
+
+**[SCREEN]** Part 6 output: `found 5/6, refused 2/2`.
+
+> Scored on the course questions, the practice pipeline found 5 of 6 and refused both unanswerable ones.
 
 ---
 
@@ -94,8 +85,7 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 > A branch is different: only one path runs, chosen by a condition. My guarded chain fetches the documents,
 > then branches. If nothing came back, it returns a fixed refusal and never calls the model. That matters for
 > security: the refusal no longer depends on the model obeying its instructions, so a prompt injection can't
-> talk it into answering. The chain also returns the source files alongside the answer, so every answer can be
-> traced back to its documents.
+> talk it into answering. It also returns the source files with every answer.
 
 ---
 
@@ -104,9 +94,7 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 **[SCREEN]** Part 8 output: the hash table with `same: True` on all six files.
 
 > From Part 8 on, it's my own knowledge base. To make the comparison fair, the first cell hashes all five
-> documents and the gold set against the originals from the RAG module, and all six say `same: True`. The
-> documents and questions haven't changed by a single byte. That's 10,104 characters in five documents and
-> eight questions.
+> documents and the gold set against the RAG module's originals, and all six say `same: True`.
 
 **[SCREEN]** Part 9: `25 chunks stored`, then scroll through the transcript. Stop on Q2, then Q7.
 
@@ -114,10 +102,8 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 > and a score threshold of 0.25. Notice it made 25 chunks; my hand-built splitter made 22 from the same text.
 > Keep that in mind, it's the whole story later.
 >
-> Here's the transcript. Q2: "How quickly do we have to acknowledge a critical SEV1 incident?" The source is
-> the severity-levels document, and the retrieved text says "Acknowledge within 15 minutes, at any hour." Q7 is
-> the banana bread question, and it's refused: "Nothing in the knowledge base is relevant enough to answer."
-> No model call was made.
+> In the transcript, Q2, "How quickly do we acknowledge a SEV1 incident?", comes back from the severity-levels
+> document: "Acknowledge within 15 minutes, at any hour." Q7, banana bread, is refused, with no model call.
 
 **[SCREEN]** Per-question table under Part 9.
 
@@ -131,9 +117,8 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 
 **[SCREEN]** Part 10 cell: the `SWEEPS` dictionary, then `Saved results_langchain.csv (25 configurations)`.
 
-> Part 10 runs the experiments, changing one setting at a time: chunk size, k, and the score threshold, using
-> exactly the RAG module's distances converted to relevance. That's 25 configurations saved to
-> `results_langchain.csv`. I added a fourth sweep that swaps the splitter itself.
+> Part 10 changes one setting at a time: chunk size, k, and the threshold, using the RAG module's distances
+> converted. Plus a fourth sweep that swaps the splitter. 25 configurations in total.
 
 **[SCREEN]** Part 11: the like-for-like row.
 
@@ -150,12 +135,10 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 
 **[SCREEN]** The comparison figure, three panels.
 
-> Here's the chart: grey is the RAG module, the other line is LangChain. On chunk size, both reach 6 at 900
-> and above, and LangChain also gets 6 at 450. On k, LangChain does better at k of 1, finding 4 versus 3,
-> because its section-aligned chunks moved the evidence for Q1 and Q6 up to rank 1. But it needs k of 8 to
-> find all six, where the RAG module had them all by k of 3. On the threshold, LangChain flattens out at 5
-> however loose I make it, because a looser threshold can't bring back a chunk that k already cut off. So the
-> recursive splitter helped some questions and hurt one.
+> On the chart, grey is the RAG module. At k of 1, LangChain actually does better, 4 versus 3, because its
+> section-aligned chunks moved Q1 and Q6 to rank 1. But it needs k of 8 to find all six, where the RAG module
+> needed 3. And on the threshold it's stuck at 5 however loose I go, because a looser threshold can't bring
+> back a chunk that k already cut off. So the recursive splitter helped some questions and hurt one.
 
 ---
 
@@ -177,8 +160,7 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 > 120 characters, longer than the 100-character overlap. The chunk kept the answer but lost the words of the
 > question. The fixed-window splitter happened to keep them together, and scored 0.483.
 >
-> So the answer was there; the chunk holding it just no longer looked like the question. Larger chunks, a
-> bigger overlap, splitting on Markdown headings, or k of 8 all fix it. Q8, the DDoS question, is wrong in both
+> Larger chunks, a bigger overlap, splitting on Markdown headings, or k of 8 all fix it. Q8, the DDoS question, is wrong in both
 > versions: the phishing playbook header looks generically like any "steps in our playbook" question, and a
 > vector distance can't insist on the word "DDoS".
 
@@ -188,9 +170,7 @@ Notebook open with saved outputs. **[SCREEN]** lines say what to show. Everythin
 
 **[SCREEN]** The Summary cell, or the report PDF, Section 6.
 
-> To wrap up: LangChain made the pipeline shorter and every stage swappable, and the branch-based refusal was
-> easy to add. But it hid two things that mattered: how chunk boundaries were chosen, and how scores were
-> computed. For a security team, that's an audit problem. If the bot gives an analyst the wrong containment
-> step, you need to know which chunk it used and at what score. Next time, I'd build with LangChain, but choose
-> the splitter on purpose, check it against the gold set, and log the relevance scores next to every answer.
-> Thanks for watching.
+> To wrap up: LangChain made the pipeline shorter and every stage swappable. But it hid how chunks were cut
+> and how scores were computed, and for a security team that's an audit problem: if the bot gives an analyst
+> the wrong containment step, you need to know which chunk it used and at what score. Next time I'd use
+> LangChain, but choose the splitter on purpose and log relevance scores next to every answer. Thanks for watching.
