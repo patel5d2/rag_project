@@ -4,7 +4,7 @@
 
 **GitHub project folder:** [github.com/patel5d2/rag_project/tree/main/langchain_project](https://github.com/patel5d2/rag_project/tree/main/langchain_project)
 
-**Video walkthrough:** VIDEO LINK HERE
+**Video walkthrough:** [Watch the video walkthrough (UC OneDrive / Stream)](https://mailuc-my.sharepoint.com/:v:/g/personal/patel5d2_mail_uc_edu/IQBNBX9gJu4PRK05OPV0n7y2AUgFBIoHNvHKCTf2wTlPq10?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=4ntHyf)
 
 ---
 
