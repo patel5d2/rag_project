@@ -1,0 +1,9 @@
+step,graph,keywords,change,caught,missed,over_escalated,closed_ok,missed_ids,over_ids,tool_calls
+1,v1,K0,lecture word list,2,4,2,4,E3 E4 E5 E6,C1 C2,
+2,v1,K1,+5 technique words,3,3,3,3,E4 E5 E6,C1 C2 C6,
+3,v1,K2,+5 broad words,3,3,5,1,E4 E5 E6,C1 C2 C3 C4 C6,
+4,v2,K1,"+ suppression node (change calendar, scanner list)",3,3,0,6,E4 E5 E6,,11
+5,v2,K1,"+ context node (process, reputation, privileged-external)",5,1,1,5,E6,C5,21
+6,v2,K1,privileged-external rule requires MFA absent,5,1,0,6,E6,,20
+7,v2,K0,"final graph, narrower word list K0",4,2,0,6,E3 E6,,17
+8,v2,K2,"final graph, wider word list K2",5,1,2,4,E6,C3 C4,24

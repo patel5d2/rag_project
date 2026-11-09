@@ -1,0 +1,17 @@
+[
+  {
+    "id": "X1",
+    "source": "EDR | Windows Security | CloudTrail | Suricata IDS | ...",
+    "time": "2026-11-01T00:00:00Z",
+    "host": "hostname or cloud resource the alert is about",
+    "user": "account involved, if any",
+    "src_ip": "source IP, if any",
+    "dst_ip": "destination IP, if any",
+    "parent": "parent process, if any",
+    "process": "process, if any",
+    "mfa": null,
+    "text": "the alert as an analyst would read it, in your own words",
+    "label": "escalate | close",
+    "why": "why an analyst would escalate or close it"
+  }
+]

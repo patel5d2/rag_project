@@ -1,0 +1,137 @@
+[
+  {
+    "id": "E1",
+    "source": "EDR",
+    "time": "2026-11-03T14:05:00Z",
+    "host": "WS-HR-03",
+    "user": "l.brooks",
+    "parent": "WINWORD.EXE",
+    "process": "cmd.exe",
+    "text": "EDR: Ransomware behavior. WINWORD.EXE spawned cmd.exe, which ran 'vssadmin delete shadows /all /quiet' on WS-HR-03.",
+    "label": "escalate",
+    "why": "Deleting volume shadow copies from a Word child process is a standard pre-encryption step (ATT&CK T1490). Isolate the host now."
+  },
+  {
+    "id": "E2",
+    "source": "Windows Security (4625/4624)",
+    "time": "2026-11-03T02:17:00Z",
+    "host": "VPN-GW-01",
+    "user": "j.martin",
+    "src_ip": "192.0.2.44",
+    "text": "Brute force: 240 failed logons (4625) for j.martin on VPN-GW-01 from 192.0.2.44 in 12 minutes, followed by a successful logon (4624) from the same IP.",
+    "label": "escalate",
+    "why": "Hundreds of failures and then a success from the same external IP means the password was guessed. The account is now in an attacker's hands."
+  },
+  {
+    "id": "E3",
+    "source": "EDR",
+    "time": "2026-11-04T09:41:00Z",
+    "host": "FIN-APP-02",
+    "user": "svc_report",
+    "parent": "cmd.exe",
+    "process": "procdump64.exe",
+    "text": "EDR detection 'OS Credential Dumping: LSASS Memory'. procdump64.exe, run from C:\\Users\\Public, opened lsass.exe with read access and wrote lsass.dmp.",
+    "label": "escalate",
+    "why": "A memory dump of LSASS holds the credentials of everyone logged on. A sysinternals tool run from a world-writable folder by a service account is not maintenance (T1003.001)."
+  },
+  {
+    "id": "E4",
+    "source": "AWS CloudTrail",
+    "time": "2026-11-05T03:12:00Z",
+    "host": "aws:acme-payroll",
+    "user": "root",
+    "src_ip": "203.0.113.77",
+    "mfa": false,
+    "text": "CloudTrail: ConsoleLogin success for the root user without MFA from 203.0.113.77, followed within 4 minutes by CreateAccessKey and PutBucketPolicy granting Principal '*' read on s3://acme-payroll-exports.",
+    "label": "escalate",
+    "why": "HARD CASE (no keywords). Root should never sign in day to day, never without MFA, and a new access key plus a public bucket policy on payroll data is persistence and exposure in one step."
+  },
+  {
+    "id": "E5",
+    "source": "EDR telemetry",
+    "time": "2026-11-05T15:30:00Z",
+    "host": "WS-SALES-14",
+    "user": "r.diaz",
+    "dst_ip": "198.51.100.23",
+    "parent": "OUTLOOK.EXE",
+    "process": "mshta.exe",
+    "text": "EDR telemetry: OUTLOOK.EXE spawned mshta.exe with a remote .hta URL; mshta.exe then made an outbound HTTPS connection to 198.51.100.23.",
+    "label": "escalate",
+    "why": "HARD CASE (no keywords). An email client launching mshta, a signed Windows binary that runs remote script, is a classic phishing execution chain (T1218.005)."
+  },
+  {
+    "id": "E6",
+    "source": "Suricata IDS",
+    "time": "2026-11-06T11:02:00Z",
+    "host": "DEV-BUILD-01",
+    "text": "Suricata ET INFO DNS query volume: 1,800 TXT lookups in 10 minutes to long random-looking subdomains of cdn-update.top from DEV-BUILD-01.",
+    "label": "escalate",
+    "why": "High-volume TXT queries with high-entropy labels to a fresh domain is the shape of DNS tunnelling, a covert channel for command and control or exfiltration (T1071.004)."
+  },
+  {
+    "id": "C1",
+    "source": "Microsoft Defender",
+    "time": "2026-11-04T14:20:00Z",
+    "host": "WS-IT-01",
+    "user": "t.osei",
+    "text": "Microsoft Defender: EICAR-Test-File detected as malware in C:\\AVTest\\eicar.com and quarantined on WS-IT-01.",
+    "label": "close",
+    "why": "HARD CASE (contains 'malware'). EICAR is a harmless industry test string. IT drops it monthly to prove AV is working, under change CHG-4471, and Defender quarantined it as designed."
+  },
+  {
+    "id": "C2",
+    "source": "Suricata IDS",
+    "time": "2026-11-04T01:30:00Z",
+    "host": "WEB-01",
+    "src_ip": "10.20.0.15",
+    "text": "Suricata ET EXPLOIT Apache Log4j RCE attempt (CVE-2021-44228) from 10.20.0.15 to WEB-01:443.",
+    "label": "close",
+    "why": "HARD CASE (contains 'exploit'). 10.20.0.15 is our authorised vulnerability scanner running its weekly scan; it is supposed to send Log4j probes."
+  },
+  {
+    "id": "C3",
+    "source": "Windows Security (4625/4624)",
+    "time": "2026-11-05T08:03:00Z",
+    "host": "WS-MKT-11",
+    "user": "a.nguyen",
+    "src_ip": "10.4.11.37",
+    "text": "Six failed logons (4625, bad password) for a.nguyen on WS-MKT-11 within 5 minutes, then a self-service password reset and successful logon from the same workstation.",
+    "label": "close",
+    "why": "A user who forgot their password on Monday morning: a handful of tries at their own desk, then the self-service reset. No remote source, no spray pattern."
+  },
+  {
+    "id": "C4",
+    "source": "PowerShell script block logging (4104)",
+    "time": "2026-11-05T10:45:00Z",
+    "host": "ADMIN-JUMP-01",
+    "user": "s.kim",
+    "src_ip": "10.1.0.5",
+    "text": "PowerShell script block logging (4104): Get-ADUser -Filter * -Properties MemberOf run by s.kim on ADMIN-JUMP-01 and exported to CSV.",
+    "label": "close",
+    "why": "s.kim is an IT administrator doing the quarterly access review, from the jump host that exists for exactly this. Enumeration by the right person from the right place."
+  },
+  {
+    "id": "C5",
+    "source": "AWS CloudTrail",
+    "time": "2026-11-06T19:40:00Z",
+    "host": "aws:acme-prod",
+    "user": "p.shah",
+    "src_ip": "192.0.2.200",
+    "mfa": true,
+    "text": "CloudTrail: ConsoleLogin success with MFA for IAM user p.shah from 192.0.2.200 (hotel network); only DescribeInstances and ListBuckets calls followed.",
+    "label": "close",
+    "why": "A cloud engineer travelling to a conference, signing in with MFA and only reading. Unfamiliar IP, but strong authentication and nothing changed."
+  },
+  {
+    "id": "C6",
+    "source": "EDR",
+    "time": "2026-11-05T23:15:00Z",
+    "host": "SCCM-01",
+    "user": "svc_sccm",
+    "src_ip": "10.1.0.20",
+    "process": "psexec.exe",
+    "text": "EDR: psexec.exe launched by svc_sccm from SCCM-01 against 40 workstations to run the November cumulative update installer.",
+    "label": "close",
+    "why": "The patching service account pushing the monthly update during the approved window CHG-4502. PsExec is an attacker favourite, but here it is the admin doing the job."
+  }
+]
