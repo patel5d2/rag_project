@@ -4,7 +4,7 @@
 
 **GitHub project folder:** [github.com/patel5d2/rag_project/tree/main/langgraph_project](https://github.com/patel5d2/rag_project/tree/main/langgraph_project)
 
-**Video walkthrough:** [VIDEO LINK GOES HERE](VIDEO_LINK)
+**Video walkthrough:** [Watch the video](https://mailuc-my.sharepoint.com/:v:/g/personal/patel5d2_mail_uc_edu/IQA0hbyTSqq_Tp45nMxiaLePASykDwc8RXdbq5otaLYqitU?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=qfc3BJ)
 
 ---
 
